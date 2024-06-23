@@ -21,6 +21,7 @@ class LoveRepository {
                 call: Call<LoveResult>,
                 response: Response<LoveResult>
             ) {
+
                 loveResults.value = response.body()
             }
 

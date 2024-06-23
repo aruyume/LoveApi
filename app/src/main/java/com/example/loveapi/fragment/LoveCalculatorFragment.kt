@@ -89,6 +89,7 @@ class LoveCalculatorFragment : Fragment(), LoveContract.View {
                     val resultFragment = LoveResultFragment().apply {
                         arguments = bundle
                     }
+
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, resultFragment)
                         .addToBackStack(null).commit()
