@@ -6,23 +6,31 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.loveapi.retrofit.App
-import com.example.loveapi.retrofit.LoveResult
+import androidx.lifecycle.ViewModelProvider
+import com.example.loveapi.App
+import com.example.loveapi.model.LoveResult
 import com.example.loveapi.R
 import com.example.loveapi.databinding.FragmentLoveCalculatorBinding
+import com.example.loveapi.mvvm.LoveViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class LoveCalculatorFragment : Fragment() {
 
-    private lateinit var binding: FragmentLoveCalculatorBinding
+    private val binding: FragmentLoveCalculatorBinding by lazy {
+        FragmentLoveCalculatorBinding.inflate(layoutInflater)
+    }
+
+    private val viewModel by lazy {
+        ViewModelProvider(this)[LoveViewModel::class.java]
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLoveCalculatorBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -38,38 +46,31 @@ class LoveCalculatorFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            App().api?.getPercentage(
+            viewModel.getLoveResult(
                 firstName = firstName,
-                key = "13db8c0c9fmsh0e8b65404615b3ap1035a5jsn85bfe5faab5c",
-                host = "love-calculator.p.rapidapi.com",
                 secondName = secondName
-            )?.enqueue(object : Callback<LoveResult> {
-                override fun onResponse(call: Call<LoveResult>, response: Response<LoveResult>) {
-                    if (response.isSuccessful && response.body() != null) {
-
-                        val loveResult = response.body()
-                        val percentage = loveResult?.percentage?.toIntOrNull() ?: 0
-                        val bundle = Bundle().apply {
-                            putString("firstName", firstName)
-                            putString("secondName", secondName)
-                            putInt("percentage", percentage)
-                        }
-                        val loveResultFragment = LoveResultFragment().apply {
-                            arguments = bundle
-                        }
-                        parentFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, loveResultFragment)
-                            .addToBackStack(null)
-                            .commit()
-
-                    } else {
-                        Toast.makeText(requireContext(), "Error: ${response.code()}", Toast.LENGTH_LONG).show()
+            ).observe(viewLifecycleOwner) { loveResults ->
+                if (loveResults != null) {
+                    val percentage = loveResults.percentage.toIntOrNull() ?: 0
+                    val bundle = Bundle().apply {
+                        putString("firstName", firstName)
+                        putString("secondName", secondName)
+                        putInt("percentage", percentage)
                     }
+                    val resultFragment = LoveResultFragment().apply {
+                        arguments = bundle
+                    }
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, resultFragment)
+                        .addToBackStack(null).commit()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Error: ",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-                override fun onFailure(call: Call<LoveResult>, throwable: Throwable) {
-                    Toast.makeText(requireContext(), throwable.message, Toast.LENGTH_LONG).show()
-                }
-            })
+            }
         }
     }
 }
