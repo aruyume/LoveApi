@@ -12,11 +12,28 @@ import com.example.loveapi.mvp.LoveContract
 import com.example.loveapi.mvp.LoveModel
 import com.example.loveapi.mvp.LovePresenter
 import com.example.loveapi.retrofit.LoveResult
+import androidx.lifecycle.ViewModelProvider
+import com.example.loveapi.App
+import com.example.loveapi.model.LoveResult
+import com.example.loveapi.R
+import com.example.loveapi.databinding.FragmentLoveCalculatorBinding
+import com.example.loveapi.mvvm.LoveViewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoveCalculatorFragment : Fragment(), LoveContract.View {
 
     private lateinit var binding: FragmentLoveCalculatorBinding
     private lateinit var presenter: LoveContract.Presenter
+  
+    private val binding: FragmentLoveCalculatorBinding by lazy {
+        FragmentLoveCalculatorBinding.inflate(layoutInflater)
+    }
+
+    private val viewModel by lazy {
+        ViewModelProvider(this)[LoveViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +75,31 @@ class LoveCalculatorFragment : Fragment(), LoveContract.View {
         }
         val loveResultFragment = LoveResultFragment().apply {
             arguments = bundle
+            viewModel.getLoveResult(
+                firstName = firstName,
+                secondName = secondName
+            ).observe(viewLifecycleOwner) { loveResults ->
+                if (loveResults != null) {
+                    val percentage = loveResults.percentage.toIntOrNull() ?: 0
+                    val bundle = Bundle().apply {
+                        putString("firstName", firstName)
+                        putString("secondName", secondName)
+                        putInt("percentage", percentage)
+                    }
+                    val resultFragment = LoveResultFragment().apply {
+                        arguments = bundle
+                    }
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, resultFragment)
+                        .addToBackStack(null).commit()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Error: ",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
         parentFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, loveResultFragment)

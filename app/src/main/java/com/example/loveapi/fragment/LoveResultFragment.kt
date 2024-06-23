@@ -13,6 +13,10 @@ class LoveResultFragment : Fragment() {
     private val binding by lazy {
         FragmentLoveResultBinding.inflate(layoutInflater)
     }
+    private val binding: FragmentLoveResultBinding by lazy {
+        FragmentLoveResultBinding.inflate(layoutInflater)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
