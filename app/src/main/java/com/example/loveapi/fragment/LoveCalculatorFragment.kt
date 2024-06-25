@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.loveapi.retrofit.App
 import com.example.loveapi.R
 import com.example.loveapi.databinding.FragmentLoveCalculatorBinding
 import com.example.loveapi.mvp.LoveContract
@@ -55,6 +58,24 @@ class LoveCalculatorFragment : Fragment(), LoveContract.View {
                 Toast.makeText(requireContext(), "Enter both names", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
+            App().api?.getPercentage(
+                firstName = firstName,
+                key = "13db8c0c9fmsh0e8b65404615b3ap1035a5jsn85bfe5faab5c",
+                host = "love-calculator.p.rapidapi.com",
+                secondName = secondName
+            )?.enqueue(object : Callback<LoveResult> {
+                override fun onResponse(call: Call<LoveResult>, response: Response<LoveResult>) {
+                    if (response.isSuccessful && response.body() != null) {
+
+                        val loveResult = response.body()
+                        val percentage = loveResult?.percentage?.toIntOrNull() ?: 0
+                        val bundle = Bundle().apply {
+                            putString("firstName", firstName)
+                            putString("secondName", secondName)
+                            putInt("percentage", percentage)
+                        }
+                        findNavController().navigate(R.id.action_loveCalculatorFragment_to_loveResultFragment, bundle)
+
             presenter.calculateLovePercentage(firstName, secondName)
         }
     }

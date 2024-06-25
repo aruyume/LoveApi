@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.loveapi.R
 import com.example.loveapi.databinding.FragmentLoveResultBinding
 
@@ -36,12 +38,7 @@ class LoveResultFragment : Fragment() {
         binding.tvPercentage.text = "$percentage%"
 
         binding.btnTryAgain.setOnClickListener {
-            val loveCalculatorFragment = LoveCalculatorFragment()
-
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, loveCalculatorFragment)
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_loveResultFragment_to_loveCalculatorFragment)
         }
     }
 }

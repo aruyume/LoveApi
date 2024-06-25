@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/onBoardStartFragment">
+
+    <fragment
+        android:id="@+id/onBoardFragment"
+        android:name="com.example.loveapi.onboard.OnBoardFragment"
+        android:label="fragment_on_board"
+        tools:layout="@layout/fragment_on_board">
+        <action
+            android:id="@+id/action_onBoardFragment_to_loveCalculatorFragment"
+            app:destination="@id/loveCalculatorFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/onBoardViewPagerFragment"
+        android:name="com.example.loveapi.onboard.OnBoardViewPagerFragment"
+        android:label="fragment_on_board_view_pager"
+        tools:layout="@layout/fragment_on_board_view_pager" />
+
+    <fragment
+        android:id="@+id/loveCalculatorFragment"
+        android:name="com.example.loveapi.fragment.LoveCalculatorFragment"
+        android:label="fragment_love_calculator"
+        tools:layout="@layout/fragment_love_calculator">
+        <action
+            android:id="@+id/action_loveCalculatorFragment_to_loveResultFragment"
+            app:destination="@id/loveResultFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loveResultFragment"
+        android:name="com.example.loveapi.fragment.LoveResultFragment"
+        android:label="fragment_love_result"
+        tools:layout="@layout/fragment_love_result">
+        <action
+            android:id="@+id/action_loveResultFragment_to_loveCalculatorFragment"
+            app:destination="@id/loveCalculatorFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/onBoardStartFragment"
+        android:name="com.example.loveapi.onboard.OnBoardStartFragment"
+        android:label="fragment_on_board_start"
+        tools:layout="@layout/fragment_on_board_start" >
+        <action
+            android:id="@+id/action_onBoardStartFragment_to_onBoardFragment"
+            app:destination="@id/onBoardFragment" />
+    </fragment>
+</navigation>
