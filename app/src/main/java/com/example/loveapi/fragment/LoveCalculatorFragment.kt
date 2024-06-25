@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.loveapi.retrofit.App
 import com.example.loveapi.retrofit.LoveResult
 import com.example.loveapi.R
@@ -37,7 +39,6 @@ class LoveCalculatorFragment : Fragment() {
                 Toast.makeText(requireContext(), "Enter both names", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-
             App().api?.getPercentage(
                 firstName = firstName,
                 key = "13db8c0c9fmsh0e8b65404615b3ap1035a5jsn85bfe5faab5c",
@@ -54,13 +55,7 @@ class LoveCalculatorFragment : Fragment() {
                             putString("secondName", secondName)
                             putInt("percentage", percentage)
                         }
-                        val loveResultFragment = LoveResultFragment().apply {
-                            arguments = bundle
-                        }
-                        parentFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, loveResultFragment)
-                            .addToBackStack(null)
-                            .commit()
+                        findNavController().navigate(R.id.action_loveCalculatorFragment_to_loveResultFragment, bundle)
 
                     } else {
                         Toast.makeText(requireContext(), "Error: ${response.code()}", Toast.LENGTH_LONG).show()

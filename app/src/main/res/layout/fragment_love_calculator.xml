@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoveCalculatorFragment">
+    tools:context=".fragment.LoveCalculatorFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="20dp"
-        android:background="@drawable/border_backround"
+        android:background="@drawable/border_background"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,7 +58,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/et_border_backround"
+            android:background="@drawable/et_border_background"
             android:hint="You"
             android:textColor="@color/black"
             android:textColorHint="@color/gray"
@@ -84,8 +84,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/et_border_backround"
-            android:hint="Me"
+            android:background="@drawable/et_border_background"
+            android:hint="@string/me"
             android:textColor="@color/black"
             android:textColorHint="@color/gray"
             android:textSize="16sp" />
