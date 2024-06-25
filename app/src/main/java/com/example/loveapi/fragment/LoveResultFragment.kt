@@ -12,13 +12,17 @@ import com.example.loveapi.databinding.FragmentLoveResultBinding
 
 class LoveResultFragment : Fragment() {
 
-    private lateinit var binding: FragmentLoveResultBinding
+    private val binding by lazy {
+        FragmentLoveResultBinding.inflate(layoutInflater)
+    }
+    private val binding: FragmentLoveResultBinding by lazy {
+        FragmentLoveResultBinding.inflate(layoutInflater)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLoveResultBinding.inflate(inflater, container, false)
         return binding.root
     }
 
