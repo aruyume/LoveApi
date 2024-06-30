@@ -47,17 +47,5 @@
             android:gravity="center"
             android:layout_margin="10dp"
             tools:text="You should take the time to help those who need you" />
-
-        <Button
-            android:id="@+id/btn_start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingHorizontal="25dp"
-            android:background="@drawable/btn_bg"
-            android:text="@string/get_started"
-            android:visibility="gone"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
