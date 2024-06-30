@@ -5,16 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.loveapi.R
 import com.example.loveapi.databinding.FragmentLoveResultBinding
 
 class LoveResultFragment : Fragment() {
 
-    private val binding by lazy {
-        FragmentLoveResultBinding.inflate(layoutInflater)
-    }
     private val binding: FragmentLoveResultBinding by lazy {
         FragmentLoveResultBinding.inflate(layoutInflater)
     }
